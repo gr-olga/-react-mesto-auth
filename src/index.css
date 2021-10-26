@@ -57,3 +57,6 @@
 
 @import "../src/blocks/enter/__container/enter__container.css";
 @import "../src/blocks/enter/__title/enter__title.css";
+@import "../src/blocks/enter/__form/enter__form.css";
+@import "../src/blocks/enter/__input/enter__input.css";
+@import "../src/blocks/enter/__btn/enter__btn.css";
