@@ -1,0 +1,19 @@
+.profile__avatar {
+    max-width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 30px;
+}
+
+.profile__avatar:hover {
+    /*background-image: url("../../../images/plus.png");*/
+    opacity: 0.3;
+}
+
+@media screen and (max-width: 500px) {
+    .profile__avatar {
+        margin-bottom: 22px;
+        margin-top: 38px;
+        margin-right: 0;
+    }
+}

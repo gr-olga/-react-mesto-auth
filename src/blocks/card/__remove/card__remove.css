@@ -1,0 +1,15 @@
+.card__remove {
+    display: none;
+    position: absolute;
+    border: none;
+    background: none;
+    z-index: 7;
+    align-self: flex-end;
+    top: 18px;
+    right: 18px;
+    cursor: pointer;
+}
+
+.card__remove:hover {
+    opacity: 0.5;
+}
