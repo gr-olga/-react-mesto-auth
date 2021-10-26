@@ -55,4 +55,5 @@
 @import "../src/blocks/popup/__label/popup__label.css";
 @import "../src/blocks/popup/__save/_invalid/popup__save_invalid.css";
 
-@import "../src/blocks/enter/enter.css";
+@import "../src/blocks/enter/__container/enter__container.css";
+@import "../src/blocks/enter/__title/enter__title.css";
