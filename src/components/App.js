@@ -10,8 +10,11 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
+import {Route, Switch} from "react-router-dom";
 
 function App() {
+
+    const [logged, setLogged] = React.useState(false)
 
     const [user, setUser] = React.useState({})
 
@@ -108,9 +111,17 @@ function App() {
         <div className="App">
             <div className="body">
                 <div className="page">
+                    <Switch>
                     <Header/>
+                        <Route exact path="/">
+                            {}
+                        </Route>
+                        <Route path="/sign-up">
                     <Register/>
+                        </Route>
+                        <Route path="/sign-in">
                     <Login/>
+                        </Route>
                     <CurrentUserContext.Provider value={user}>
                         <Main
                             onAddPlace={handleAddPlaceClick}
@@ -122,6 +133,8 @@ function App() {
                             onCardDelete={handleCardDelete}
                         />
                     </CurrentUserContext.Provider>
+
+                </Switch>
                     <Footer/>
                 </div>
                 <section>
