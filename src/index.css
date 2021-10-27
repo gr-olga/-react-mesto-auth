@@ -60,3 +60,10 @@
 @import "../src/blocks/enter/__form/enter__form.css";
 @import "../src/blocks/enter/__input/enter__input.css";
 @import "../src/blocks/enter/__btn/enter__btn.css";
+
+@import "../src/blocks/register/__container/register__container.css";
+@import "../src/blocks/register/__title/register__title.css";
+@import "../src/blocks/register/__form/register__form.css";
+@import "../src/blocks/register/__input/register__input.css";
+@import "../src/blocks/register/__btn/register__btn.css";
+@import "../src/blocks/register/__leave-btn/register__leave-btn.css";
