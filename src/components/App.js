@@ -16,7 +16,7 @@ import InfoTooltip from "./InfoTooltip";
 
 function App() {
 
-    const [logged, setLogged] = React.useState(true)
+    const [logged, setLogged] = React.useState(false)
 
     const [user, setUser] = React.useState({})
 
@@ -113,23 +113,23 @@ function App() {
         <div className="App">
             <div className="body">
                 <div className="page">
-                    {/*<Switch>*/}
+                    <Switch>
                     <Header/>
-                        {/*<Route exact path="/">*/}
-                        {/*    {logged ? <Redirect to="/sign-in"/> : <Redirect to="/sign-up"/>}*/}
-                        {/*</Route>*/}
+                        <Route exact path="/">
+                            {logged ? <Redirect to="/sign-in"/> : <Redirect to="/sign-up"/>}
+                        </Route>
                         <Route path="/sign-up">
                     <Register/>
                         </Route>
                         <Route path="/sign-in">
-                    <Login/>
+                    <Login/>\
+
                         </Route>
-                   {/*<ProtectedRoute*/}
-                   {/*    path="/main"*/}
-                   {/*    logged={logged}*/}
-                   {/*    component={Main}*/}
-                   {/*>*/}
-                    <InfoTooltip/>
+                   <ProtectedRoute
+                       path="/main"
+                       logged={logged}
+                       component={Main}
+                   >
                     <CurrentUserContext.Provider value={user}>
                         <Main
                             onAddPlace={handleAddPlaceClick}
@@ -141,11 +141,12 @@ function App() {
                             onCardDelete={handleCardDelete}
                         />
                     </CurrentUserContext.Provider>
-                    {/*</ProtectedRoute>*/}
-                    {/*</Switch>*/}
+                            </ProtectedRoute>
+                    </Switch>
                     <Footer/>
                 </div>
                 <section>
+                    <InfoTooltip/>
                     <CurrentUserContext.Provider value={user}>
                         <EditProfilePopup
                             isOpen={isEditProfilePopupOpen}
