@@ -12,6 +12,7 @@ import Login from "./Login";
 import Register from "./Register";
 import {Redirect, Route, Switch} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
 
@@ -128,6 +129,7 @@ function App() {
                    {/*    logged={logged}*/}
                    {/*    component={Main}*/}
                    {/*>*/}
+                    <InfoTooltip/>
                     <CurrentUserContext.Provider value={user}>
                         <Main
                             onAddPlace={handleAddPlaceClick}

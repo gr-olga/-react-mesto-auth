@@ -68,3 +68,7 @@
 @import "../src/blocks/register/__input/register__input.css";
 @import "../src/blocks/register/__btn/register__btn.css";
 @import "../src/blocks/register/__leave-btn/register__leave-btn.css";
+
+@import "../src/blocks/info/__box/info__box.css";
+@import "../src/blocks/info/info.css";
+
