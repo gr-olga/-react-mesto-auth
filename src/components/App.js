@@ -10,11 +10,12 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
 
-    const [logged, setLogged] = React.useState(false)
+    const [logged, setLogged] = React.useState(true)
 
     const [user, setUser] = React.useState({})
 
@@ -111,17 +112,22 @@ function App() {
         <div className="App">
             <div className="body">
                 <div className="page">
-                    <Switch>
+                    {/*<Switch>*/}
                     <Header/>
-                        <Route exact path="/">
-                            {}
-                        </Route>
+                        {/*<Route exact path="/">*/}
+                        {/*    {logged ? <Redirect to="/sign-in"/> : <Redirect to="/sign-up"/>}*/}
+                        {/*</Route>*/}
                         <Route path="/sign-up">
                     <Register/>
                         </Route>
                         <Route path="/sign-in">
                     <Login/>
                         </Route>
+                   {/*<ProtectedRoute*/}
+                   {/*    path="/main"*/}
+                   {/*    logged={logged}*/}
+                   {/*    component={Main}*/}
+                   {/*>*/}
                     <CurrentUserContext.Provider value={user}>
                         <Main
                             onAddPlace={handleAddPlaceClick}
@@ -133,8 +139,8 @@ function App() {
                             onCardDelete={handleCardDelete}
                         />
                     </CurrentUserContext.Provider>
-
-                </Switch>
+                    {/*</ProtectedRoute>*/}
+                    {/*</Switch>*/}
                     <Footer/>
                 </div>
                 <section>
