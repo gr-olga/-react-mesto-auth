@@ -71,4 +71,8 @@
 
 @import "../src/blocks/info/__box/info__box.css";
 @import "../src/blocks/info/info.css";
+@import "../src/blocks/info/__img/info__img.css";
+@import "../src/blocks/info/__title/info__title.css";
+
+
 
