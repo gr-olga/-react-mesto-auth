@@ -10,13 +10,13 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
-import {Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
 
 function App() {
 
-    const [logged, setLogged] = React.useState(false)
+    // const [logged, setLogged] = React.useState(false)
 
     const [user, setUser] = React.useState({})
 
@@ -113,36 +113,27 @@ function App() {
         <div className="App">
             <div className="body">
                 <div className="page">
-                    <Switch>
                     <Header/>
-                        <Route exact path="/">
-                            {logged ? <Redirect to="/sign-in"/> : <Redirect to="/sign-up"/>}
-                        </Route>
-                        <Route path="/sign-up">
-                    <Register/>
-                        </Route>
-                        <Route path="/sign-in">
-                    <Login/>\
-
-                        </Route>
-                   <ProtectedRoute
-                       path="/main"
-                       logged={logged}
-                       component={Main}
-                   >
                     <CurrentUserContext.Provider value={user}>
-                        <Main
-                            onAddPlace={handleAddPlaceClick}
-                            onEditAvatar={handleEditAvatarClick}
-                            onEditProfile={handleEditProfileClick}
-                            onSelectedCard={handleCardClick}
-                            cards={cards}
-                            onCardLike={handleCardLike}
-                            onCardDelete={handleCardDelete}
-                        />
+                        <BrowserRouter>
+                            <Switch>
+                                <ProtectedRoute
+                                    isLogged={true}
+                                    component={Main}
+                                    onAddPlace={handleAddPlaceClick}
+                                    onEditAvatar={handleEditAvatarClick}
+                                    onEditProfile={handleEditProfileClick}
+                                    onSelectedCard={handleCardClick}
+                                    cards={cards}
+                                    onCardLike={handleCardLike}
+                                    onCardDelete={handleCardDelete}
+                                    exact path="/">
+                                </ProtectedRoute>
+                                <Route path="/signup" component={Register}/>
+                                <Route path="/signin" component={Login}/>
+                            </Switch>
+                        </BrowserRouter>
                     </CurrentUserContext.Provider>
-                            </ProtectedRoute>
-                    </Switch>
                     <Footer/>
                 </div>
                 <section>
