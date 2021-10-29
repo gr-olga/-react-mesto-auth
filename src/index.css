@@ -6,6 +6,8 @@
 @import "../src/blocks/header/header.css";
 @import "../src/blocks/header/__logo/header__logo.css";
 @import "../src/blocks/header/__link/header__link.css";
+@import "../src/blocks/header/__email/header__email.css";
+@import "../src/blocks/header/__box/header__box.css";
 
 @import "../src/blocks/profile/profile.css";
 @import "../src/blocks/profile/__avatar/profile__avatar.css";
@@ -73,6 +75,7 @@
 @import "../src/blocks/info/info.css";
 @import "../src/blocks/info/__img/info__img.css";
 @import "../src/blocks/info/__title/info__title.css";
+@import "../src/blocks/info/_is-open/info_is-open.css";
 
 
 

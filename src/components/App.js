@@ -13,10 +13,24 @@ import Register from "./Register";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
+import {signUp} from "./Auth";
 
 function App() {
 
-    // const [logged, setLogged] = React.useState(false)
+
+    const [isLogged, setLogged] = React.useState(false)
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
+
+
+// function checkToken(jwt) {
+//     Auth.getLoginStatus(jwt)
+//         .then((res) => {
+//             setLogged(true)
+//             setEmail(res.data.email)
+//         })
+//         .catch(err => console.log(err))
+// }
 
     const [user, setUser] = React.useState({})
 
@@ -109,16 +123,34 @@ function App() {
             .catch((err) => console.log(err))
     }
 
+    const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false)
+    const [isInfoTooltipSuccess, setInfoTooltipSuccess] = React.useState(true)
+
+    function handleSignUp(password, email) {
+        signUp(password, email)
+            .then(() => {
+                setInfoTooltipOpen(true)
+                setInfoTooltipSuccess(true)
+            })
+            .catch(()=>{
+                setInfoTooltipOpen(true)
+                setInfoTooltipSuccess(false)
+            })
+    }
+
+
+
     return (
         <div className="App">
             <div className="body">
                 <div className="page">
-                    <Header/>
+                    <Header email={email}
+                    />
                     <CurrentUserContext.Provider value={user}>
                         <BrowserRouter>
                             <Switch>
                                 <ProtectedRoute
-                                    isLogged={true}
+                                    isLogged={isLogged}
                                     component={Main}
                                     onAddPlace={handleAddPlaceClick}
                                     onEditAvatar={handleEditAvatarClick}
@@ -129,7 +161,9 @@ function App() {
                                     onCardDelete={handleCardDelete}
                                     exact path="/">
                                 </ProtectedRoute>
-                                <Route path="/signup" component={Register}/>
+                                <Route path="/signup">
+                                    <Register onSignUp={handleSignUp}/>
+                                </Route>
                                 <Route path="/signin" component={Login}/>
                             </Switch>
                         </BrowserRouter>
@@ -137,12 +171,15 @@ function App() {
                     <Footer/>
                 </div>
                 <section>
-                    <InfoTooltip/>
+                    <InfoTooltip
+                        isOpen={isInfoTooltipOpen}
+                        isSuccess={isInfoTooltipSuccess}
+                    />
                     <CurrentUserContext.Provider value={user}>
                         <EditProfilePopup
                             isOpen={isEditProfilePopupOpen}
                             onClose={closeAllPopups}
-                            onUpdateUser={handleUpdateUser}
+                            onUpdateUxser={handleUpdateUser}
 
                         />
                         <AddPlacePopup
@@ -164,6 +201,7 @@ function App() {
                         onClose={closeAllPopups}
                     />
                 </section>
+
             </div>
         </div>
     )
