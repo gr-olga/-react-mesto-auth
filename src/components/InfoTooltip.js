@@ -23,7 +23,7 @@ function InfoTooltip(props) {
         <div className={`info ${props.isOpen ? 'info_is-open' : ''}`}>
             <div className="info__box">
                 <button className="popup__btn-close" type="button"
-                    // onClick={closeForm}
+                     onClick={props.onClose}
                 />
                 <img src={props.isSuccess ? ok : notOk} className="info__img" alt="sing"/>
                 {toggleTitle(props)}

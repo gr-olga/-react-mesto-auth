@@ -67,6 +67,7 @@ function App() {
         setAddPlacePopupOpen(false)
         setEditAvatarPopupOpen(false)
         setSelectedCard(undefined)
+        setInfoTooltipOpen(false)
     }
 
     function handleUpdateUser(obj) {
@@ -131,10 +132,8 @@ function App() {
             .then(() => {
                 setInfoTooltipOpen(true)
                 setInfoTooltipSuccess(true)
-                console.log('then');
             })
             .catch(()=>{
-                console.log('catch');
                 setInfoTooltipOpen(true)
                 setInfoTooltipSuccess(false)
             })
@@ -176,6 +175,7 @@ function App() {
                     <InfoTooltip
                         isOpen={isInfoTooltipOpen}
                         isSuccess={isInfoTooltipSuccess}
+                        onClose={closeAllPopups}
                     />
                     <CurrentUserContext.Provider value={user}>
                         <EditProfilePopup
