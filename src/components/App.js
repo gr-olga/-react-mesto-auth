@@ -131,8 +131,10 @@ function App() {
             .then(() => {
                 setInfoTooltipOpen(true)
                 setInfoTooltipSuccess(true)
+                console.log('then');
             })
             .catch(()=>{
+                console.log('catch');
                 setInfoTooltipOpen(true)
                 setInfoTooltipSuccess(false)
             })

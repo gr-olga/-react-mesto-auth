@@ -6,8 +6,8 @@
     width: 32px;
     height: 32px;
     align-self: flex-end;
-    /*margin-top: -40px;*/
-    margin-right: 450px;
+    margin-top: -40px;
+    margin-right: -40px;
     border: none;
     cursor: pointer;
 }
