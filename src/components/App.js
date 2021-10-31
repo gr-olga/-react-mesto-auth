@@ -10,12 +10,12 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
-import {BrowserRouter, Route, Switch, } from "react-router-dom";
+import {BrowserRouter, Route, Switch, withRouter, useHistory} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
 import {getLoginStatus, signIn, signUp} from "./Auth";
 
-function App() {
+function App(props) {
     // const history = useHistory();
     const [isLogged, setLogged] = React.useState(false)
     const [email, setEmail] = React.useState('')
@@ -130,7 +130,7 @@ function App() {
                 return tokenCheck()
             })
             .then(() => {
-                // history.push('/');
+                props.history.push('/');
             })
     }
 
@@ -223,6 +223,6 @@ function App() {
     )
 }
 
-export default App;
+export default withRouter(App);
 
 
