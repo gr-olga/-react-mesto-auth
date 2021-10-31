@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -10,30 +10,16 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch, } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
-import {signUp} from "./Auth";
+import {getLoginStatus, signIn, signUp} from "./Auth";
 
 function App() {
-
-
+    // const history = useHistory();
     const [isLogged, setLogged] = React.useState(false)
     const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
-
-
-// function checkToken(jwt) {
-//     Auth.getLoginStatus(jwt)
-//         .then((res) => {
-//             setLogged(true)
-//             setEmail(res.data.email)
-//         })
-//         .catch(err => console.log(err))
-// }
-
     const [user, setUser] = React.useState({})
-
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false)
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
@@ -83,7 +69,6 @@ function App() {
             .catch((err) => console.log(err))
     }
 
-
     const currentUser = React.useContext(CurrentUserContext);
     const [cards, setCards] = React.useState([])
 
@@ -92,7 +77,6 @@ function App() {
             setCards(card)
         }).catch((err) => console.log(err))
     }, [])
-
 
     function handleCardLike(card) {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -133,20 +117,45 @@ function App() {
                 setInfoTooltipOpen(true)
                 setInfoTooltipSuccess(true)
             })
-            .catch(()=>{
+            .catch(() => {
                 setInfoTooltipOpen(true)
                 setInfoTooltipSuccess(false)
             })
     }
 
+    function handleSignIn(password, email) {
+        signIn(password, email)
+            .then(data => {
+                localStorage.setItem('token', data.token)
+                return tokenCheck()
+            })
+            .then(() => {
+                // history.push('/');
+            })
+    }
 
+    const [logIn, setLogin] = useState(false)
+
+    function tokenCheck() {
+        const token = localStorage.getItem('token')
+        if (token) {
+            getLoginStatus(token)
+                .then(({data}) => {
+                    setLogin(true)
+                    setEmail(data.email)
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
+    useEffect(() => {
+        tokenCheck();
+    }, [])
 
     return (
         <div className="App">
             <div className="body">
                 <div className="page">
-                    <Header email={email}
-                    />
                     <CurrentUserContext.Provider value={user}>
                         <BrowserRouter>
                             <Switch>
@@ -161,11 +170,16 @@ function App() {
                                     onCardLike={handleCardLike}
                                     onCardDelete={handleCardDelete}
                                     exact path="/">
+                                    <Header email={email} isSignIn={false}/>
                                 </ProtectedRoute>
                                 <Route path="/signup">
+                                    <Header email={email} isSignIn={true}/>
                                     <Register onSignUp={handleSignUp}/>
                                 </Route>
-                                <Route path="/signin" component={Login}/>
+                                <Route path="/signin">
+                                    <Header email={email} isSignIn={false}/>
+                                    <Login onSighIn={handleSignIn}/>
+                                </Route>
                             </Switch>
                         </BrowserRouter>
                     </CurrentUserContext.Provider>

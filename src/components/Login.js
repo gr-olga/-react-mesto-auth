@@ -1,8 +1,6 @@
 import React from "react";
-import {signIn} from "./Auth";
 
-
-function Login() {
+function Login(props) {
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -15,9 +13,9 @@ function Login() {
         setPassword(e.target.value)
     }
 
-    function submitForm(e){
+    function submitForm(e) {
         e.preventDefault()
-        signIn(password,email)
+        props.onSighIn(password, email)
     }
 
     return (

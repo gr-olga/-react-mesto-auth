@@ -29,9 +29,9 @@ export function signIn(password, email) {
         if (res.status === 200) {
             return res.json();
         }
-    }).then(data => localStorage.setItem('token', data.token))
-        .catch(err => {
-            console.log(err)
+    // }).then(data => localStorage.setItem('token', data.token))
+    //     .catch(err => {
+    //         console.log(err)
         })
 }
 
