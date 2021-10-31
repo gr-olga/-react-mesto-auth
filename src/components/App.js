@@ -10,26 +10,25 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
-import {BrowserRouter, Route, Switch, withRouter, useHistory} from "react-router-dom";
+import {BrowserRouter, Route, Switch, withRouter} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
 import {getLoginStatus, signIn, signUp} from "./Auth";
 
 function App(props) {
-    // const history = useHistory();
-    const [isLogged, setLogged] = React.useState(false)
-    const [email, setEmail] = React.useState('')
-    const [user, setUser] = React.useState({})
-    const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false)
-    const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
-    const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
+    const [isLogged, setLogged] = useState(false)
+    const [email, setEmail] = useState('')
+    const [user, setUser] = useState({})
+    const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false)
+    const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false)
+    const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false)
+    const [selectedCard, setSelectedCard] = useState(undefined)
 
-    const [selectedCard, setSelectedCard] = React.useState(undefined)
-
-    React.useEffect(() => {
-        api.getInitialProfile().then((info) => {
-            setUser(info);
-        }).catch((err) => console.log(err))
+    useEffect(() => {
+        tokenCheck();
+        api.getInitialProfile()
+            .then((info) => setUser(info))
+            .catch((err) => console.log(err))
     }, [])
 
     function handleCardClick(card) {
@@ -112,10 +111,11 @@ function App(props) {
     const [isInfoTooltipSuccess, setInfoTooltipSuccess] = React.useState(true)
 
     function handleSignUp(password, email) {
-        signUp(password, email)
+        return signUp(password, email)
             .then(() => {
                 setInfoTooltipOpen(true)
                 setInfoTooltipSuccess(true)
+                setLogged(true)
             })
             .catch(() => {
                 setInfoTooltipOpen(true)
@@ -124,9 +124,10 @@ function App(props) {
     }
 
     function handleSignIn(password, email) {
-        signIn(password, email)
+        return signIn(password, email)
             .then(data => {
                 localStorage.setItem('token', data.token)
+                setLogged(true)
                 return tokenCheck()
             })
             .then(() => {
@@ -134,23 +135,16 @@ function App(props) {
             })
     }
 
-    const [logIn, setLogin] = useState(false)
-
     function tokenCheck() {
         const token = localStorage.getItem('token')
-        if (token) {
-            getLoginStatus(token)
-                .then(({data}) => {
-                    setLogin(true)
-                    setEmail(data.email)
-                })
-                .catch(err => console.log(err))
-        }
+        if (!token) return Promise.resolve();
+        return getLoginStatus(token)
+            .then(({data}) => {
+                setLogged(true)
+                setEmail(data.email)
+            })
+            .catch(err => console.log(err))
     }
-
-    useEffect(() => {
-        tokenCheck();
-    }, [])
 
     return (
         <div className="App">
